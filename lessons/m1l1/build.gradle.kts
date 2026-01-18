@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm")
+    id("build-jvm")
 }
 
 dependencies {
@@ -8,8 +8,4 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
-}
-
-kotlin {
-    jvmToolchain(17)
 }
