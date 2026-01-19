@@ -1,4 +1,5 @@
 /.gradle/
+**/.gradle/
 /.kotlin/
 build/
 !gradle/wrapper/gradle-wrapper.jar
@@ -7,5 +8,6 @@ build/
 /.idea/
 
 *.iml
+.kotlin
 
 .DS_Store
