@@ -8,4 +8,4 @@ pluginManagement {
 rootProject.name = "otus-kotlin-2025"
 
 includeBuild("lessons")
-includeBuild("project-be")
+includeBuild("book-shelf-be")
