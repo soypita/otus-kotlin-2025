@@ -1,4 +1,4 @@
-rootProject.name = "project-be"
+rootProject.name = "book-shelf-be"
 
 pluginManagement {
     includeBuild("../build-plugin")
@@ -18,4 +18,4 @@ plugins {
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-include("project-tmp")
+include("book-shelf-tmp")
