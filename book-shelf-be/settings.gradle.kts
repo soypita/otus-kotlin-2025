@@ -1,5 +1,13 @@
 rootProject.name = "book-shelf-be"
 
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("libs") {
+            from(files("../gradle/libs.versions.toml"))
+        }
+    }
+}
+
 pluginManagement {
     includeBuild("../build-plugin")
     plugins {
@@ -18,4 +26,6 @@ plugins {
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-include("book-shelf-tmp")
+include("book-shelf-api-v1-jackson")
+include("book-shelf-common")
+include("book-shelf-api-v1-mappers")
