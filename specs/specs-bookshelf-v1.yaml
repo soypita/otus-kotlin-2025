@@ -1,0 +1,415 @@
+openapi: 3.0.3
+info:
+  title: "Bookshelf ${VERSION_APP}"
+  description: Персональный сервис для ведения списка книг
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/v1
+tags:
+  - name: book
+    description: Информация о книге
+paths:
+  /books/create:
+    post:
+      tags:
+        - book
+      summary: Create Book
+      operationId: bookCreate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookCreateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookCreateResponse'
+  /books/read:
+    post:
+      tags:
+        - book
+      summary: Read Book
+      operationId: bookRead
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookReadRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookReadResponse'
+  /books/update:
+    post:
+      tags:
+        - book
+      summary: Update Book
+      operationId: bookUpdate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookUpdateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookUpdateResponse'
+  /books/delete:
+    post:
+      tags:
+        - book
+      summary: Delete book
+      operationId: bookDelete
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookDeleteRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookDeleteResponse'
+  /books/search:
+    post:
+      tags:
+        - book
+      summary: Search Books
+      operationId: bookSearch
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookSearchRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookSearchResponse'
+
+components:
+  schemas:
+
+    IRequest:
+      type: object
+      description: Базовый интерфейс для всех запросов
+      properties:
+        requestType:
+          type: string
+          description: Поле-дескриминатор для вычисления типа запроса
+          example: create
+      discriminator:
+        propertyName: requestType
+        mapping:
+          create: '#/components/schemas/BookCreateRequest'
+          read:   '#/components/schemas/BookReadRequest'
+          update: '#/components/schemas/BookUpdateRequest'
+          delete: '#/components/schemas/BookDeleteRequest'
+          search: '#/components/schemas/BookSearchRequest'
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        group:
+          type: string
+        field:
+          type: string
+        message:
+          type: string
+
+    ResponseResult:
+      type: string
+      enum:
+        - success
+        - error
+
+    IResponse:
+      type: object
+      description: Базовый интерфейс для всех ответов
+      properties:
+        responseType:
+          type: string
+          description: Поле-дескриминатор для вычисления типа запроса
+          example: create
+        result:
+          $ref: '#/components/schemas/ResponseResult'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+
+      discriminator:
+        propertyName: responseType
+        mapping:
+          create: '#/components/schemas/BookCreateResponse'
+          read:   '#/components/schemas/BookReadResponse'
+          update: '#/components/schemas/BookUpdateResponse'
+          delete: '#/components/schemas/BookDeleteResponse'
+          search: '#/components/schemas/BookSearchResponse'
+
+
+    UserId:
+      type: string
+      description: Идентификатор пользователя
+    BookId:
+      type: string
+      description: Идентификатор объявления
+    BookLock:
+      type: string
+      description: Версия оптимистичной блокировки
+
+    BaseBook:
+      type: object
+      description: Объект описывает свойства, одинаковые для create и update
+      properties:
+        title:
+          type: string
+          description: Заголовок книги
+        author:
+          type: string
+          description: Автор книги
+        status:
+          $ref: '#/components/schemas/BookStatus'
+        rating:
+          type: string
+          description: Оценка пользователя (от 1 до 5)
+        reviewText:
+          type: string
+          description: Короткий отзыв или заметка
+
+    BookStatus:
+      type: string
+      description: 'Статус прочтения'
+      enum:
+        - want_to_read
+        - reading
+        - read
+
+    BookCreateObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseBook'
+
+
+    BookCreateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/BookRequestDebug'
+        - type: object
+          properties:
+            book:
+              $ref: '#/components/schemas/BookCreateObject'
+
+    BookReadObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/BookId'
+
+    BookReadRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/BookRequestDebug'
+        - type: object
+          properties:
+            book:
+              $ref: '#/components/schemas/BookReadObject'
+
+    BookUpdateObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseBook'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/BookId'
+            lock:
+              $ref: '#/components/schemas/BookLock'
+
+    BookUpdateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/BookRequestDebug'
+        - type: object
+          properties:
+            book:
+              $ref: '#/components/schemas/BookUpdateObject'
+
+    BookDeleteObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/BookId'
+            lock:
+              $ref: '#/components/schemas/BookLock'
+
+    BookDeleteRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/BookRequestDebug'
+        - type: object
+          properties:
+            book:
+              $ref: '#/components/schemas/BookDeleteObject'
+
+    BookSearchFilter:
+      type: object
+      description: Набор фильтров для поиска
+      properties:
+        title:
+          type: string
+          description: Поиск по названию книги
+        author:
+          type: string
+          description: Поиск по автору книги
+        rating:
+          type: string
+          description: Поиск всех книг с конкретным пользоавтельским рейтингом
+        status:
+          $ref: '#/components/schemas/BookStatus'
+
+    BookSearchRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/BookRequestDebug'
+        - type: object
+          properties:
+            bookFilter:
+              $ref: '#/components/schemas/BookSearchFilter'
+
+    BookResponseObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseBook'
+        - type: object
+          description: Объект, который возвращается в ответе бэкенда
+          properties:
+            id:
+              $ref: '#/components/schemas/BookId'
+            userId:
+              $ref: '#/components/schemas/UserId'
+            lock:
+              $ref: '#/components/schemas/BookLock'
+            permissions:
+              type: array
+              uniqueItems: true
+              items:
+                $ref: '#/components/schemas/BookPermissions'
+
+    BookPermissions:
+      type: string
+      description: Доступы для клиента для операций над отзывом на книгу
+      enum:
+        - read
+        - update
+        - delete
+        - makeVisiblePublic
+        - makeVisibleOwn
+        - makeVisibleGroup
+
+    BookResponseSingle:
+      allOf:
+        - type: object
+          description: Ответ с одним объектом книги
+          properties:
+            book:
+              $ref: '#/components/schemas/BookResponseObject'
+
+    BookResponseMulti:
+      allOf:
+        - type: object
+          description: Список найденных объектов
+          properties:
+            books:
+              type: array
+              items:
+                $ref: '#/components/schemas/BookResponseObject'
+
+    BookCreateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/BookResponseSingle'
+
+    BookReadResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/BookResponseSingle'
+
+    BookUpdateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/BookResponseSingle'
+
+    BookDeleteResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/BookResponseSingle'
+
+    BookSearchResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/BookResponseMulti'
+
+    # STUBS ======================
+    BookRequestDebugMode:
+      type: string
+      enum:
+        - prod
+        - test
+        - stub
+
+    BookRequestDebug:
+      type: object
+      properties:
+        debug:
+          $ref: '#/components/schemas/BookDebug'
+
+    BookDebug:
+      type: object
+      properties:
+        mode:
+          $ref: '#/components/schemas/BookRequestDebugMode'
+        stub:
+          $ref: '#/components/schemas/BookRequestDebugStubs'
+
+    BookRequestDebugStubs:
+      type: string
+      description: Перечисления всех стабов
+      enum:
+        - success
+        - notFound
+        - badId
+        - badTitle
+        - badAuthor
+        - badRating
+        - badReviewText
+        - badVisibility
+        - cannotDelete
+        - badSearchParams
