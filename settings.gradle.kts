@@ -13,3 +13,4 @@ plugins {
 
 includeBuild("lessons")
 includeBuild("book-shelf-be")
+includeBuild("book-shelf-libs")

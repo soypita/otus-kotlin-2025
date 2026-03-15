@@ -1,0 +1,23 @@
+ktor:
+  development: false
+  deployment:
+    port: 8080
+  watch:
+    - classes
+    - resources
+  application:
+    modules:
+      - "ApplicationKt.modules"
+  urls:
+    - "http://127.0.0.1:8080/v1"
+    - "http://0.0.0.0:8080/v1"
+
+  logger: logback
+#  # Логирование типа socket требует установки в fluent-bit.conf
+#  # [INPUT]
+#  # Name    TCP # Вот здесь нужно поменять!
+#  # Listen  0.0.0.0
+#  # Port    24224
+#  logger: socket
+#  socketLogger:
+#    port: 24224

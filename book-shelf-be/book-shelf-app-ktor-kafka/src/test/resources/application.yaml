@@ -1,0 +1,12 @@
+ktor:
+  development: true
+  deployment:
+    port: 8080
+  watch:
+    - classes
+    - resources
+  application:
+    modules: []
+  urls:
+    - "http://127.0.0.1:8080/v1"
+    - "http://0.0.0.0:8080/v1"
