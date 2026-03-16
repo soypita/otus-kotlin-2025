@@ -8,6 +8,7 @@ version = "0.0.1"
 ext {
     val specDir = layout.projectDirectory.dir("../specs")
     set("spec-v1", specDir.file("specs-bookshelf-v1.yaml").toString())
+    set("spec-log1", specDir.file("specs-bookshelf-log1.yaml").toString())
 }
 
 

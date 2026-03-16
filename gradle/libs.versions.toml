@@ -2,17 +2,27 @@
 kotlin = "2.2.21"
 kotlinx-datetime = "0.6.2"
 kotlinx-serialization = "1.8.1"
+coroutines = "1.9.0"
+bookshelfVer = "0.0.1"
+
 
 binaryCompabilityValidator = "0.13.2"
 
 openapi-generator = "7.12.0"
 jackson = "2.18.3"
 
+#Frameworks
+ktor = "3.3.3"
+
 # BASE
 jvm-compiler = "17"
 jvm-language = "21"
 
+kermit = "2.0.3"
+logback = "1.5.3"
+
 [libraries]
+kotlinx-atomicfu = { module = "org.jetbrains.kotlinx:atomicfu", version = "0.23.2" }
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-binaryCompatibilityValidator = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binaryCompabilityValidator" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
@@ -21,6 +31,44 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 
 jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
 jackson-datatype = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
+
+# Ktor
+ktor-network = { module = "io.ktor:ktor-network", version.ref = "ktor" }
+ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-serialization-jackson = { module = "io.ktor:ktor-serialization-jackson", version.ref = "ktor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
+ktor-server-cio = { module = "io.ktor:ktor-server-cio", version.ref = "ktor" }
+ktor-server-tomcat-jakarta = { module = "io.ktor:ktor-server-tomcat-jakarta", version.ref = "ktor" }
+ktor-server-headers-response = { module = "io.ktor:ktor-server-auto-head-response", version.ref = "ktor" }
+ktor-server-headers-caching = { module = "io.ktor:ktor-server-caching-headers", version.ref = "ktor" }
+ktor-server-headers-default = { module = "io.ktor:ktor-server-default-headers", version.ref = "ktor" }
+ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
+ktor-server-yaml = { module = "io.ktor:ktor-server-config-yaml", version.ref = "ktor" }
+ktor-server-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-server-calllogging = { module = "io.ktor:ktor-server-call-logging", version.ref = "ktor" }
+ktor-server-websocket = { module = "io.ktor:ktor-server-websockets", version.ref = "ktor" }
+ktor-server-test = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
+
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+
+# Logging
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+logback-appenders = { module = "com.sndyuk:logback-more-appenders", version = "1.8.8" }
+logback-logstash = { module = "net.logstash.logback:logstash-logback-encoder", version = "7.4" }
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+logger-fluentd = { module = "org.fluentd:fluent-logger", version = "0.3.4" }
+
+# Kafka
+kafka-client = { module = "org.apache.kafka:kafka-clients", version = "3.7.0" }
+
+# Bookshelf Common
+bookshelf-logs-common = { module = "ru.otus.otuskotlin.bookshelf.libs:book-shelf-lib-logging-common", version.ref = "bookshelfVer" }
+bookshelf-logs-logback = { module = "ru.otus.otuskotlin.bookshelf.libs:book-shelf-lib-logging-logback", version.ref = "bookshelfVer" }
+bookshelf-common = { module = "ru.otus.otuskotlin.bookshelf:book-shelf-lib-common", version.ref = "bookshelfVer" }
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

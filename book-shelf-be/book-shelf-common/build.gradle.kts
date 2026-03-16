@@ -9,9 +9,10 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
-                api("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
+                api(libs.kotlinx.datetime)
                 implementation(libs.kotlinx.serialization.core)
                 implementation(libs.kotlinx.serialization.json)
+                api(libs.bookshelf.logs.common)
             }
         }
         commonTest {
